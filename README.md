@@ -1,5 +1,5 @@
 > [!WARNING] 
-> This package is in early development (< 1.0.0). The public API is not yet stable and is subject to breaking changes. Use in production is **not recommended until version 1.0.0 is released.**
+> This package is still in early development (< 1.0.0). The public API is not yet stable and is subject to breaking changes. Use in production is **not recommended until version 1.0.0 is released.**
 
 ## encrypt-it
 
