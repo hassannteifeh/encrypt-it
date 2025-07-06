@@ -1,14 +1,14 @@
 > [!WARNING] 
 > This package is still in early development (< 1.0.0). The public API is not yet stable and is subject to breaking changes. Use in production is **not recommended until version 1.0.0 is released.**
 
-## encrypt-it
+## shifra
 
 A super simple symmetric encryption library for Node.js, built on top of the native crypto module. It bundles all necessary cryptographic data (like the IV and ciphertext) into a single token that can be stored or transmitted for later decryption.
 
 ## Install
 
 ```#!/bin/sh
-npm install encrypt-it
+npm install shifra
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ The library uses a `Result` type for safe error handling instead of throwing exc
 Here is a basic example:
 
 ```typescript
-import { encrypt, decrypt } from 'encrypt-it'
+import { encrypt, decrypt } from 'shifra'
 
 const secretKey = process.env.ENCRYPTION_KEY as string
 
