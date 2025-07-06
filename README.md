@@ -1,3 +1,6 @@
+> [!WARNING] 
+> This package is in early development (< 1.0.0). The public API is not yet stable and is subject to breaking changes. Use in production is **not recommended until version 1.0.0 is released.**
+
 ## encrypt-it
 
 A super simple symmetric encryption library for Node.js, built on top of the native crypto module. It bundles all necessary cryptographic data (like the IV and ciphertext) into a single token that can be stored or transmitted for later decryption.
