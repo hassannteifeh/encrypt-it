@@ -13,6 +13,7 @@
     "src"
   ],
   "devDependencies": {
+    "@changesets/cli": "^2.29.5",
     "@eslint/js": "^9.28.0",
     "@tsconfig/node-ts": "^23.6.1",
     "@tsconfig/node22": "^22.0.2",
@@ -34,7 +35,7 @@
     "code-coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
     "lint:check": "eslint ./src/**/*.ts && prettier --check ./src/**/*.ts",
     "prettier:fix": "prettier --write ./src/**/*.ts",
-    "prepack": "npm run build"
+    "release": "changeset publish"
   },
   "engines": {
     "node": ">=20 <= 24"
