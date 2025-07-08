@@ -1,9 +1,18 @@
-> [!WARNING] 
-> This package is still in early development (< 1.0.0). The public API is not yet stable and is subject to breaking changes. Use in production is **not recommended until version 1.0.0 is released.**
+> [!WARNING]
+> This package is under active development (v0.y.z) and follows Semantic Versioning v2.0.0. The public API is not yet stable and is subject to breaking changes before the v1.0.0 release. **Use in production is not recommended** until the v1.0.0 release.
 
 ## shifra
 
-A super simple symmetric encryption library for Node.js, built on top of the native crypto module. It bundles all necessary cryptographic data (like the IV and ciphertext) into a single token that can be stored or transmitted for later decryption.
+`shifra` is a simple symmetric encryption library for Node.js, built on the native crypto module.
+
+## Features
+
+- **Simple API**: Encrypt and decrypt data with a high-level interface. The library automatically handles low-level details like Buffer data and Initialization Vector (IV) creation, so you don't have to.
+- **Self-Contained Tokens**: Automatically bundles all necessary crypto data (IV, auth tag, etc.) into a single string token that can be stored and fetched later for decryption.
+- **Safe Error Handling**: Prevents unexpected crashes by returning a `Result` object (Ok or Err) instead of throwing exceptions.
+- **Zero Dependencies**: Built purely on the native Node.js crypto module.
+
+The name of the library comes from the arabic word "شيفرة", which translates to "cipher".
 
 ## Install
 
@@ -15,7 +24,9 @@ npm install shifra
 
 The library uses a `Result` type for safe error handling instead of throwing exceptions. A Result is either an `Ok` containing a value, or an `Err` containing an error.
 
-Here is a basic example:
+### Basic Example
+
+Here is a simple example of encrypting and decrypting data.
 
 ```typescript
 import { encrypt, decrypt } from 'shifra'
@@ -60,7 +71,7 @@ if (decryptionResult.isErr()) {
 console.log('Decrypted data:', decryptionResult.value) // Should log "my secret data"
 ```
 
-Or if you prefer a more monadic/chaining approach:
+### Chaining / Monadic Approach
 
 ```typescript
 SymmetricKey.fromString(secretKey, 'hex')
