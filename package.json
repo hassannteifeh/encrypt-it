@@ -14,7 +14,8 @@
   },
   "files": [
     "dist",
-    "src"
+    "src",
+    "!**/*.test.ts"
   ],
   "devDependencies": {
     "@changesets/cli": "^2.29.5",
