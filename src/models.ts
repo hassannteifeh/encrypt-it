@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-export type SymmetricEncryptionAlgorithm =
-  | 'aes-128-gcm'
-  | 'aes-192-gcm'
-  | 'aes-256-gcm'
-  | 'aes-128-cbc'
-  | 'aes-192-cbc'
-  | 'aes-256-cbc'
+export type AesGcmAlgorithm = 'aes-128-gcm' | 'aes-192-gcm' | 'aes-256-gcm'
+export type AesCbcAlgorithm = 'aes-128-cbc' | 'aes-192-cbc' | 'aes-256-cbc'
+
+export type SymmetricEncryptionAlgorithm = AesGcmAlgorithm | AesCbcAlgorithm
 
 type AlgorithmConfig = {
   keyLength: number
