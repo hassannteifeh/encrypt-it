@@ -16,6 +16,8 @@
 
 import {
   symmetricAlgorithmConfig,
+  type AesCbcAlgorithm,
+  type AesGcmAlgorithm,
   type SymmetricEncryptionAlgorithm,
 } from '../models.js'
 import { err, ok, type Result } from '../result/index.ts'
@@ -38,23 +40,15 @@ class AlgorithmKeyLengthMismatch extends Error {
   }
 }
 
-const parseTokenForAesGcm = (
+const parseTokenForAesGcm = ({
+  parts,
+  token,
+}: {
+  parts: [AesGcmAlgorithm, string, string, string]
   token: string
-): Result<AesGcmEncryptionDataObject, Error> => {
+}): Result<AesGcmEncryptionDataObject, Error> => {
   try {
-    const parts = token.split(':')
-    if (parts.length !== 4) {
-      return err(new Error('Invalid token'))
-    }
     const [algorithmPart, ivPart, tagPart, ciphertextPart] = parts
-
-    if (
-      algorithmPart !== 'aes-128-gcm' &&
-      algorithmPart !== 'aes-192-gcm' &&
-      algorithmPart !== 'aes-256-gcm'
-    ) {
-      return err(new UnsupportedOrInvalidAlgorithm(algorithmPart))
-    }
 
     if (
       !ivPart ||
@@ -89,23 +83,15 @@ const parseTokenForAesGcm = (
   }
 }
 
-const parseTokenForAesCbc = (
+const parseTokenForAesCbc = ({
+  parts,
+  token,
+}: {
+  parts: [AesCbcAlgorithm, string, string]
   token: string
-): Result<AesCbcEncryptionDataObject, Error> => {
+}): Result<AesCbcEncryptionDataObject, Error> => {
   try {
-    const parts = token.split(':')
-    if (parts.length !== 3) {
-      return err(new Error('Invalid token'))
-    }
     const [algorithmPart, ivPart, ciphertextPart] = parts
-
-    if (
-      algorithmPart !== 'aes-256-cbc' &&
-      algorithmPart !== 'aes-128-cbc' &&
-      algorithmPart !== 'aes-192-cbc'
-    ) {
-      return err(new UnsupportedOrInvalidAlgorithm(algorithmPart))
-    }
 
     if (
       !ivPart ||
@@ -141,17 +127,25 @@ const parseToken = (token: string): Result<EncryptionDataObject, Error> => {
 
   const algorithmPart = parts[0]
   if (
-    algorithmPart === 'aes-256-gcm' ||
-    algorithmPart === 'aes-128-gcm' ||
-    algorithmPart === 'aes-192-gcm'
+    (algorithmPart === 'aes-256-gcm' ||
+      algorithmPart === 'aes-128-gcm' ||
+      algorithmPart === 'aes-192-gcm') &&
+    parts.length === 4
   ) {
-    return parseTokenForAesGcm(token)
+    return parseTokenForAesGcm({
+      parts: [algorithmPart, ...(parts.slice(1) as [string, string, string])],
+      token,
+    })
   } else if (
-    algorithmPart === 'aes-256-cbc' ||
-    algorithmPart === 'aes-128-cbc' ||
-    algorithmPart === 'aes-192-cbc'
+    (algorithmPart === 'aes-256-cbc' ||
+      algorithmPart === 'aes-128-cbc' ||
+      algorithmPart === 'aes-192-cbc') &&
+    parts.length === 3
   ) {
-    return parseTokenForAesCbc(token)
+    return parseTokenForAesCbc({
+      parts: [algorithmPart, ...(parts.slice(1) as [string, string])],
+      token,
+    })
   } else {
     return err(new UnsupportedOrInvalidAlgorithm(algorithmPart))
   }
