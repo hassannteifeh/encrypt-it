@@ -3,7 +3,7 @@
 
 ## shifra
 
-`shifra` is a simple symmetric encryption library for Node.js, built on the native crypto module.
+`shifra` is a simple symmetric encryption library for Node.js, built on the native crypto module. The name of the library comes from the arabic word "شيفرة", which translates to "cipher".
 
 ## Features
 
@@ -11,8 +11,6 @@
 - **Self-Contained Tokens**: Automatically bundles all necessary crypto data (IV, auth tag, etc.) into a single string token that can be stored and fetched later for decryption.
 - **Safe Error Handling**: Prevents unexpected crashes by returning a `Result` object (Ok or Err) instead of throwing exceptions.
 - **Zero Dependencies**: Built purely on the native Node.js crypto module.
-
-The name of the library comes from the arabic word "شيفرة", which translates to "cipher".
 
 ## Install
 
@@ -56,7 +54,7 @@ if (encryptionResult.isErr()) {
   return
 }
 
-const token = encryptionResult.value.token
+const { token } = encryptionResult.value
 
 const decryptionResult = decrypt({
   token,
@@ -83,11 +81,11 @@ SymmetricKey.fromString(secretKey, 'hex')
       algorithm: 'aes-256-gcm',
     })
   })
-  .andThen((encryptionResult) => {
-    console.log('Token:', encryptionResult.token)
-    console.log('Ciphertext:', encryptionResult.ciphertext.toString('hex'))
-    console.log('IV:', encryptionResult.iv.toString('hex'))
-    console.log('Auth Tag:', encryptionResult.authTag.toString('hex'))
+  .andThen(({ token, ciphertext, iv, authTag }) => {
+    console.log('Token:', token)
+    console.log('Ciphertext:', ciphertext.toString('hex'))
+    console.log('IV:', iv.toString('hex'))
+    console.log('Authentication tag:', authTag.toString('hex'))
 
     return decrypt({
       key,
