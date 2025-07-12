@@ -1,5 +1,11 @@
 # encrypt-it
 
+## 0.1.3
+
+### Patch Changes
+
+- c319e0a: Updated README, and cleaned up files.
+
 ## 0.1.2
 
 ### Patch Changes
