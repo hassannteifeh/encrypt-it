@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-// TODO: review file for copyright and license information
 import { ok, err, type Result } from './result'
 
 describe('Result', () => {
